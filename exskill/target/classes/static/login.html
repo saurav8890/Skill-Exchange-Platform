@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main class="page-shell">
+    <section class="hero-card">
+        <p class="eyebrow">Skill Exchange Login</p>
+        <h1>Jump Back Into Your Community</h1>
+        <p class="hero-copy">
+            Login with your email ya apna registered name, then dashboard se users, skills, aur requests manage karo.
+        </p>
+    </section>
+
+    <section class="panel narrow-panel">
+        <p class="eyebrow">Welcome Back</p>
+        <h2>Login</h2>
+        <p class="helper-text">Use your registered email or name to login. If you forgot your password, reset it below.</p>
+
+        <div class="form-grid">
+            <input id="email" type="text" placeholder="Enter Email or Name" onkeydown="submitOnEnter(event, login)">
+            <input id="password" type="password" placeholder="Enter Password" onkeydown="submitOnEnter(event, login)">
+        </div>
+
+        <button onclick="login()">Login</button>
+        <button type="button" class="secondary-button full-width-button" onclick="toggleResetPasswordPanel()">Forgot Password?</button>
+
+        <div id="resetPasswordPanel" class="reset-panel hidden-panel">
+            <p class="eyebrow">Reset Access</p>
+            <h3>Forgot Password</h3>
+            <p class="helper-text">Enter your registered email and set a new password.</p>
+            <div class="form-grid">
+                <input id="resetEmail" type="email" placeholder="Registered Email" onkeydown="submitOnEnter(event, resetPassword)">
+                <input id="resetPasswordNew" type="password" placeholder="New Password" onkeydown="submitOnEnter(event, resetPassword)">
+                <input id="resetPasswordConfirm" type="password" placeholder="Confirm New Password" onkeydown="submitOnEnter(event, resetPassword)">
+            </div>
+            <div class="action-row">
+                <button type="button" onclick="resetPassword()">Update Password</button>
+                <button type="button" class="ghost-button" onclick="toggleResetPasswordPanel(false)">Cancel</button>
+            </div>
+        </div>
+
+        <div class="link-row">
+            <a href="/index.html">Back to Home</a>
+            <a href="/index.html">Create Account</a>
+        </div>
+    </section>
+</main>
+
+<script src="/script.js"></script>
+</body>
+</html>

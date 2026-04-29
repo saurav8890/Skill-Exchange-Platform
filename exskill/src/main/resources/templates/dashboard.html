@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/script.js"></script>
+</head>
+<body>
+<main class="dashboard-shell">
+    <section class="hero-card dashboard-hero">
+        <p class="eyebrow">User Dashboard</p>
+        <h1>Manage Skills and Requests</h1>
+        <p class="hero-copy">
+            Use your stored user id to add skills and exchange with other people on the platform.
+        </p>
+    </section>
+
+    <section class="dashboard-grid">
+        <div class="panel">
+            <h2>All Users</h2>
+            <div id="userList" class="stack-list"></div>
+        </div>
+
+        <div class="panel">
+            <h2>Add Skill</h2>
+            <div class="form-grid">
+                <input id="skillTitle" placeholder="Skill Title">
+                <input id="skillDescription" placeholder="Skill Description">
+            </div>
+            <button onclick="addSkill()">Add Skill</button>
+            <div id="skillList" class="stack-list"></div>
+        </div>
+
+        <div class="panel">
+            <h2>Send Exchange Request</h2>
+            <div class="form-grid">
+                <input id="receiverId" type="number" placeholder="Other User ID">
+            </div>
+            <button onclick="sendRequest()">Send Request</button>
+            <div id="requestList" class="stack-list"></div>
+        </div>
+    </section>
+</main>
+
+<script>
+    const userId = localStorage.getItem("userId");
+
+    if (!userId) {
+        alert("Please login first");
+        window.location.href = "/login.html";
+    } else {
+        loadUsers();
+        loadSkills();
+        loadRequests();
+    }
+</script>
+</body>
+</html>
+

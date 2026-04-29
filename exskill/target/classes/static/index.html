@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Exchange</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main class="page-shell">
+    <section class="hero-card">
+        <p class="eyebrow">Spring Boot Full Stack Project</p>
+        <h1>Skill Exchange Platform</h1>
+        <p class="hero-copy">
+        </p>
+        <div class="hero-tags">
+            <span>Find collaborators</span>
+            <span>Exchange real skills</span>
+            <span>Grow your network</span>
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2>Create Account</h2>
+        <p class="helper-text">
+
+        </p>
+        <div class="form-grid">
+            <input id="name" type="text" placeholder="Name" required>
+            <input id="email" type="email" placeholder="Email" required>
+            <input id="password" type="password" placeholder="Password" required>
+            <label class="toggle-row">
+                <input id="isAdmin" type="checkbox">
+                <span>Register as Admin</span>
+            </label>
+            <input id="adminCode" type="text" placeholder="Admin Access Code (only if admin)">
+        </div>
+        <button onclick="register()">Register</button>
+        <p class="helper-text">Already registered?</p>
+        <div class="link-row">
+            <a href="/login.html">Login</a>
+            <a href="/dashboard.html">Open Dashboard</a>
+        </div>
+    </section>
+</main>
+
+<script src="/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/style.css">
+    <script src="/script.js"></script>
+</head>
+<body>
+<main class="dashboard-shell">
+    <section class="hero-card dashboard-hero">
+        <p class="eyebrow">User Dashboard</p>
+        <h1>Manage Skills and Requests</h1>
+        <p class="hero-copy">
+            Use your stored user id to add skills and exchange with other people on the platform.
+        </p>
+        <div class="stats-row hero-stats">
+            <div class="stat-card">
+                <span>Total Users</span>
+                <strong id="totalUsersCount">0</strong>
+            </div>
+            <div class="stat-card">
+                <span>Your Skills</span>
+                <strong id="mySkillsCount">0</strong>
+            </div>
+            <div class="stat-card">
+                <span>Open Chats</span>
+                <strong id="openChatsCount">0</strong>
+            </div>
+        </div>
+        <div class="hero-actions">
+            <span id="welcomeUser" class="user-chip"></span>
+            <button type="button" onclick="logout()">Logout</button>
+        </div>
+    </section>
+
+    <section class="dashboard-grid">
+        <div class="panel">
+            <h2>All Users</h2>
+            <p class="helper-text">Click a user ID to view that person's skills.</p>
+            <div class="form-grid compact-grid">
+                <input id="userSearchInput" placeholder="Search by name, email or ID" oninput="filterUsers()">
+            </div>
+            <div id="userList" class="stack-list"></div>
+        </div>
+
+        <div class="panel">
+            <h2>Add Skill</h2>
+            <div class="form-grid">
+                <input id="skillTitle" placeholder="Skill Title">
+                <input id="skillDescription" placeholder="Skill Description">
+            </div>
+            <button onclick="addSkill()">Add Skill</button>
+            <div id="skillList" class="stack-list"></div>
+        </div>
+
+        <div class="panel">
+            <h2>User Skills</h2>
+            <p id="selectedUserLabel" class="helper-text">Select a user from the user list to view their skills.</p>
+            <div class="action-row">
+                <button type="button" id="requestSelectedUserButton" class="secondary-button" onclick="requestSelectedUser()" disabled>Request This User</button>
+            </div>
+            <div id="selectedUserSkills" class="stack-list"></div>
+        </div>
+
+        <div class="panel request-panel">
+            <h2>Exchange Requests</h2>
+            <div class="form-grid">
+                <input id="receiverId" type="number" placeholder="Other User ID">
+            </div>
+            <div class="hero-actions">
+                <button onclick="sendRequest()">Send Request</button>
+                <button type="button" class="secondary-button" onclick="refreshDashboard()">Refresh Dashboard</button>
+            </div>
+            <div class="stats-row">
+                <div class="stat-card">
+                    <span>Incoming</span>
+                    <strong id="incomingCount">0</strong>
+                </div>
+                <div class="stat-card">
+                    <span>Sent</span>
+                    <strong id="sentCount">0</strong>
+                </div>
+                <div class="stat-card">
+                    <span>Rejected</span>
+                    <strong id="rejectedCount">0</strong>
+                </div>
+            </div>
+            <div class="tab-row">
+                <button type="button" id="incomingTab" class="tab-button active-tab" onclick="switchRequestTab('incoming', this)">Incoming</button>
+                <button type="button" id="sentTab" class="tab-button" onclick="switchRequestTab('sent', this)">Other ID Requests</button>
+                <button type="button" id="rejectedTab" class="tab-button" onclick="switchRequestTab('rejected', this)">Reject</button>
+            </div>
+            <div id="requestList" class="stack-list"></div>
+        </div>
+
+        <div class="panel chat-panel">
+            <h2>Private Skill Exchange Room</h2>
+            <div id="chatRoomList" class="stack-list"></div>
+            <div class="video-call-panel">
+                <div class="video-toolbar">
+                    <button type="button" onclick="startVideoCall()">Start Video Call</button>
+                    <button type="button" onclick="endVideoCall()">End Call</button>
+                </div>
+                <div class="video-grid">
+                    <div class="video-card">
+                        <p>Your Camera</p>
+                        <video id="localVideo" autoplay playsinline muted></video>
+                    </div>
+                    <div class="video-card">
+                        <p>Matched User</p>
+                        <video id="remoteVideo" autoplay playsinline></video>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-box">
+                <div id="chatMessages" class="chat-messages"></div>
+                <div class="chat-compose">
+                    <input id="chatMessageInput" type="text" placeholder="Type a message">
+                    <button type="button" onclick="sendChatMessage()">Send</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel admin-panel hidden-panel" id="adminPanel">
+            <h2>Main Admin Panel</h2>
+            <p class="helper-text">All platform requests appear here for admin review.</p>
+            <div id="adminRequestList" class="stack-list"></div>
+        </div>
+    </section>
+</main>
+
+<script>
+    const userId = localStorage.getItem("userId");
+
+    if (!userId) {
+        alert("Please login first");
+        window.location.href = "/login.html";
+    } else {
+        const userName = localStorage.getItem("userName");
+        const welcomeUser = document.getElementById("welcomeUser");
+        if (welcomeUser) {
+            const adminBadge = localStorage.getItem("isAdmin") === "true" ? " (Admin)" : "";
+            welcomeUser.textContent = userName ? `Logged in as ${userName}${adminBadge}` : `Logged in as user #${userId}${adminBadge}`;
+        }
+        loadUsers();
+        loadSkills();
+        loadRequests();
+        loadChatRooms();
+        updateRequestCounts();
+        toggleAdminPanel();
+    }
+</script>
+</body>
+</html>
